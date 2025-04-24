@@ -1,0 +1,10 @@
+MONGODB_HOST: mongodb.kalyaneswar.site # submit your host
+REDIS_HOST: redis.kalyaneswar.site
+MYSQL_HOST: mysql.kalyaneswar.site
+RABBITMQ_HOST: rabbitmq.kalyaneswar.site
+CATALOGUE_HOST: catalogue.kalyaneswar.site
+USER_HOST: user.kalyaneswar.site
+CART_HOST: cart.kalyaneswar.site
+SHIPPING_HOST: shipping.kalyaneswar.site
+PAYMENT_HOST: payment.kalyaneswar.site
+DISPATCH_HOST: dispatch.kalyaneswar.site
