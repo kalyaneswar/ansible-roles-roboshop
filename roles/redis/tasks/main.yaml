@@ -1,0 +1,20 @@
+
+#  TASK1 Install redis
+- name: Install redis 
+  ansible.builtin.yum:
+    name: redis
+    state: latest
+
+#  Task2: Allow remote conncections
+- name: allow remote conncections
+  ansible.builtin.replace:
+    path: /etc/redis/redis.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+#  Task3: Start and enable redis
+- name: Start and enable redis
+  ansible.builtin.service:
+    name: redis
+    state: started  # Ensure the service is started
+    enabled: yes  # Ensure the service starts on boot

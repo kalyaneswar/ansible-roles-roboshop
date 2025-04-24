@@ -18,7 +18,3 @@
     state: started  # Ensure the service is started
     enabled: yes  # Ensure the service starts on boot
 
-# Task 4: Set passwd for root
-- name: Run command to set passwd
-  ansible.builtin.command:
-    cmd: mysql_secure_installation --set-root-pass {{mysql_password}}

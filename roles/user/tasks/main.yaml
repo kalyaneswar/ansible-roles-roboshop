@@ -1,0 +1,15 @@
+- name: App Setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+
+- name: NodeJS Setup for User Service
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs
+
+- name: system enable and start
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd

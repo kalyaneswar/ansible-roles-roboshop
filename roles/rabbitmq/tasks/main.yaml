@@ -1,0 +1,42 @@
+# Task 1: Configure Erlang repo
+- name: Configure YUM Erlang Repos
+  ansible.builtin.shell: |
+    curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash
+  args:
+  # “Run this task only if the file /etc/yum.repos.d/rabbitmq_erlang.repo does not already exist.”
+    creates: /etc/yum.repos.d/rabbitmq_erlang.repo
+
+# Task 2: Configure RabbitMQ repo
+- name: Configure YUM RabbitMQ Repos
+  ansible.builtin.shell: |
+    curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash
+  args:
+  # “Run this task only if the file /etc/yum.repos.d/rabbitmq_rabbitmq-server.repo does not already exist.”
+    creates: /etc/yum.repos.d/rabbitmq_rabbitmq-server.repo
+
+# Task 3: Install RabbitMQ Server
+- name: Install RabbitMQ Server
+  ansible.builtin.dnf:
+    name: rabbitmq-server
+    state: present
+
+# Task 4: Start and Enable RabbitMQ Service
+- name: Start and Enable RabbitMQ
+  ansible.builtin.service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes
+
+# Task 5: Add RabbitMQ User (only if not already present)
+- name: Check if RabbitMQ user exists
+  ansible.builtin.command: rabbitmqctl list_users
+  register: rabbitmq_users
+
+- name: Create RabbitMQ user
+  ansible.builtin.command: rabbitmqctl add_user roboshop roboshop123
+  when: "'roboshop' not in rabbitmq_users.stdout"
+
+# Task 6: Set permissions for roboshop user
+- name: Set RabbitMQ Permissions
+  ansible.builtin.command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+
