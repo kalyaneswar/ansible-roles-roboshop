@@ -1,0 +1,32 @@
+  #  TASK 1: Copy mongo repo
+    - name: Copy mongo repo
+      ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+
+# Task2:  Mongo DB Install
+    - name: Install mongo db
+      ansible.builtin.package:
+        name: mongodb-org
+        state: latest
+
+# Task3: Monog DB enable and start
+    - name: Enable and start Mongo db
+      ansible.builtin.service:
+        name: mongod
+        state: started
+        enabled: yes
+      
+# Task 4: Edit the config file
+    - name: allow remote conncections
+      ansible.builtin.replace:
+        path: /etc/mongod.conf
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+
+# Task 5: restart the mongo DB
+    - name: restart Mongo db
+      ansible.builtin.service:
+        name: mongod
+        state: restarted
+

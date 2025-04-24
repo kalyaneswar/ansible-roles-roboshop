@@ -1,0 +1,24 @@
+#  TASK 1: Install Mysql server
+- name: Install MySQL Server
+  ansible.builtin.yum:
+    name: mysql-server
+    state: latest
+
+# Task 2: Install Python dependencies for MySQL interaction
+- name: install python mysql dependencies
+  ansible.builtin.pip:
+    name:
+      - PyMySQL  # MySQL client library for Python
+      - cryptography  # Library for cryptographic operations (often needed by MySQL)
+    executable: pip3.9  # Use pip for Python 3.9 (make sure it's available in the system)
+# Task 3: Start MySQL service and enable it to start on boot
+- name: start and Enable MySQL
+  ansible.builtin.service:
+    name: mysqld  # MySQL service name
+    state: started  # Ensure the service is started
+    enabled: yes  # Ensure the service starts on boot
+
+# Task 4: Set passwd for root
+- name: Run command to set passwd
+  ansible.builtin.command:
+    cmd: mysql_secure_installation --set-root-pass {{mysql_password}}
